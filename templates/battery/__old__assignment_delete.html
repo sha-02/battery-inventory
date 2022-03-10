@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Battery assignment{% endblock %}
+
+
+{% block content %}
+
+  <h1>Delete battery assignment</h1>
+
+  <p>Are you sure you want to delete this battery assignment ?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Yes, Delete</button>
+    <a role="button" class="btn btn-light" href="{% url 'battery:assignment' %}">No, Abort</a>
+  </form>
+
+{% endblock content %}

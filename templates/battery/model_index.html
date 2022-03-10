@@ -1,0 +1,42 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Battery Model{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            {% if models %}
+                <h1>{{ models.count }} battery model{{ models.count|pluralize }}</h1>
+            {% else %}
+                <h1>No battery model</h1>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+
+            <div class="list-group">
+                {% for model in models %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'battery:model_detail' model.pk %}">{{ model.description }}</a></th>
+                    </tr>
+                {% endfor %}
+             </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a role="button" class="btn btn-primary" href="{% url 'battery:model_create' %}">New model</a>
+        </div>
+    </div>
+{% endblock %}

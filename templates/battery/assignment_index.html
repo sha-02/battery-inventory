@@ -1,0 +1,61 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Battery assignment{% endblock %}
+
+{% block content-large %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            {% if assignments %}
+                <h1>{{ assignments.count }} battery assignment{{ assignments.count|pluralize }}</h1>
+            {% else %}
+                <h1>No Current assignments</h1>
+            {% endif %}
+
+            <!-- filters -->
+            <form>
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Set Filter" class="btn btn-info btn-sm">
+                <a class="btn btn-outline-info btn-sm" href="{% url 'battery:assignment' %}">Clear Filter</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Device</th>
+                  <th scope="col">Battery Model</th>
+                  <th scope="col">Battery Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+
+            <div class="list-group">
+                {% for assignment in assignments %}
+                    <tr>
+                        <th scope="row"><a href="{% url 'battery:assignment_detail' assignment.pk %}">{{ assignment.device }}</a></th>
+                      <td>{{ assignment.battery_model }}</td>
+                      <td>{{ assignment.battery_qty }}</td>
+                    </tr>
+                {% endfor %}
+                {% if devices %}
+                    <tr>
+                      <th class="table-dark" scope="row">Total</th>
+                      <td class="table-dark"></td>
+                      <th class="table-dark">{{ battery_total }}</th>
+                    </tr>
+                {% endif %}
+             </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a role="button" class="btn btn-primary" href="{% url 'battery:assignment_create' %}">New assignment</a>
+        </div>
+    </div>
+{% endblock %}
